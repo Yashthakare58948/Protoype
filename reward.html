@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rewards - Advanced Weather Platform</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: linear-gradient(to bottom right, #ffe0b2, #ffccbc);
+        }
+        header {
+    background-color: #FF9C73;
+    color: #000; /* Text color set to black */
+    padding: 20px 0;
+    text-align: center;
+    font-size: 24px;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: #000; /* Text color set to black */
+    text-decoration: none;
+    }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #d84315;
+        }
+
+        .report-box {
+            background-color: #fff8e1;
+            border-left: 5px solid #ff6f00;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .report-box strong {
+            color: #e65100;
+        }
+
+        form {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        form input, form textarea {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        form button {
+            background-color: #ff6f00;
+            color: white;
+            border: none;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #e65100;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎁 Rewards</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="current.html">Current Weather</a>
+            <a href="air.html">Wind & Air Quality</a>
+            <a href="feedback.html">Feedback</a>
+            <a href="reports.html">Reports</a>
+            <a href="reward.html">Rewards</a>
+
+        </nav>
+    </div>
+
+    <div class="content">
+        <h2>📌 Latest Reward Submissions</h2>
+
+        <div class="report-box">
+            <strong>🌱 Greening Action - Chennai</strong><br>
+            Residents planted 150 trees in Adyar. Blockchain Ref: <code>#9b3f1a8</code>.<br>
+            ✅ <em>Reward: 120 Eco Points</em>
+        </div>
+
+        <div class="report-box">
+            <strong>🔥 Hot Zone Report - Nagpur</strong><br>
+            Temperature hit 46°C. Citizen-sourced data verified via blockchain.<br>
+            ✅ <em>Reward: 70 Eco Points</em>
+        </div>
+
+        <div class="report-box">
+            <strong>🌿 Green Roof Initiative - Bangalore</strong><br>
+            Reported rooftop garden project reducing local heat. Blockchain Ref: <code>#7a1e4b2</code>.<br>
+            ✅ <em>Reward: 90 Eco Points</em>
+        </div>
+
+        <h2>📝 Suggest an Idea & Get Rewarded!</h2>
+        <form id="suggestionForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="mobile">Mobile No:</label>
+            <input type="tel" id="mobile" required pattern="[0-9]{10}" maxlength="10">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="suggestion">Your Suggestion:</label>
+            <textarea id="suggestion" rows="4" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('suggestionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("🎉 Thank you! You’ve earned 50 Eco Coins for your suggestion.");
+            this.reset(); // Optional: Reset the form after submission
+        });
+    </script>
+</body>
+</html>

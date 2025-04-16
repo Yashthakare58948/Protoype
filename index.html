@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Weather Platform - Home</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+  <script src="https://unpkg.com/leaflet-heat/dist/leaflet-heat.js" defer></script>
+
+  <script defer>
+    window.onload = () => {
+      const map = L.map("map").setView([28.6139, 77.209], 6);
+
+      // OpenStreetMap layer
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors",
+      }).addTo(map);
+
+      // OpenWeatherMap Heatmap Layer
+      const weatherHeatmapLayer = L.tileLayer(
+        "https://{s}.tile.openweathermap.org/map/temperature_new/{z}/{x}/{y}.png?appid=74dd6e09b9c459d3ee707b62de48de9d", {
+          attribution: "&copy; <a href='https://openweathermap.org'>OpenWeatherMap</a>",
+          maxZoom: 19,
+          minZoom: 3
+      }).addTo(map);
+
+      const geojsonData = {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "name": "Delhi",
+              "temperature": 35
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [77.209, 28.6139]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "name": "Mumbai",
+              "temperature": 30
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [72.8777, 19.0760]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "name": "Shimla",
+              "temperature": 15
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [77.1734, 31.1048]
+            }
+          }
+        ]
+      };
+
+      function getGradientColor(temp) {
+        const normalized = Math.min(Math.max((temp - 0) / 50, 0), 1);
+        const gradient = {
+          0.0: 'blue',
+          0.1: 'cyan',
+          0.3: 'green',
+          0.5: 'yellow',
+          0.7: 'orange',
+          1.0: 'red'
+        };
+        const keys = Object.keys(gradient).map(k => parseFloat(k)).sort((a, b) => a - b);
+        for (let i = 0; i < keys.length - 1; i++) {
+          const lower = keys[i], upper = keys[i + 1];
+          if (normalized >= lower && normalized <= upper) {
+            return gradient[lower];
+          }
+        }
+        return gradient[1.0];
+      }
+
+      // Add city dots with temperature-based colors
+      geojsonData.features.forEach(feature => {
+        const lat = feature.geometry.coordinates[1];
+        const lon = feature.geometry.coordinates[0];
+        const temp = feature.properties.temperature;
+
+        L.circleMarker([lat, lon], {
+          radius: 8,
+          fillColor: getGradientColor(temp),
+          color: '#fff',
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        }).bindPopup(`<strong>${feature.properties.name}</strong><br>🌡 Temp: ${temp}°C`).addTo(map);
+      });
+
+      async function getWeather(lat, lon) {
+        const apiKey = '74dd6e09b9c459d3ee707b62de48de9d';
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+        const weatherDataDiv = document.getElementById("weatherData");
+        weatherDataDiv.classList.add("loading");
+        weatherDataDiv.innerHTML = "";
+
+        try {
+          const res = await axios.get(url);
+          const weather = res.data;
+          weatherDataDiv.classList.remove("loading");
+          weatherDataDiv.innerHTML = `
+            <div class="weather-card">
+              <h3>${weather.name}</h3>
+              <p>🌤 ${weather.weather[0].description}</p>
+              <p>🌡 Temp: ${weather.main.temp} °C</p>
+              <p>💧 Humidity: ${weather.main.humidity}%</p>
+              <p>🌬 Wind Speed: ${weather.wind.speed} m/s</p>
+            </div>
+          `;
+        } catch (error) {
+          weatherDataDiv.classList.remove("loading");
+          weatherDataDiv.innerHTML = "<p>Error fetching weather data</p>";
+        }
+      }
+
+      getWeather(28.6139, 77.209);
+
+      map.on("click", (e) => {
+        const { lat, lng } = e.latlng;
+        getWeather(lat, lng);
+      });
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+          map.setView([latitude, longitude], 10);
+          getWeather(latitude, longitude);
+        });
+      }
+
+      const toggle = document.getElementById("themeToggle");
+      const currentTheme = localStorage.getItem("theme") || "light";
+      if (currentTheme === "dark") document.body.classList.add("dark");
+
+      toggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        const newTheme = document.body.classList.contains("dark") ? "dark" : "light";
+        localStorage.setItem("theme", newTheme);
+      });
+    };
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1>🌦️ Weather Platform</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="current-weather.html">Current Weather</a></li>
+        <li><a href="wind-air-quality.html">Wind & Air Quality</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="reward.html">Rewards</a></li>
+      </ul>
+    </nav>
+    <button id="themeToggle">🌓 Toggle Theme</button>
+
+    <div class="legend-box">
+      <h4>🌡️ Temperature</h4>
+      <div id="legend">
+        <div><span style="background-color: blue;"></span> <small>&lt;10°C</small></div>
+        <div><span style="background-color: cyan;"></span> <small>10–20°C</small></div>
+        <div><span style="background-color: green;"></span> <small>20–25°C</small></div>
+        <div><span style="background-color: yellow;"></span> <small>25–30°C</small></div>
+        <div><span style="background-color: orange;"></span> <small>30–40°C</small></div>
+        <div><span style="background-color: red;"></span> <small>&gt;40°C</small></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section transparent">
+        <h2>🌍 Live Weather Map</h2>
+        <div id="map" style="height: 400px; width: 100%;"></div>
+      </section>
+
+    <section class="section transparent">
+      <h2>📍 Weather Overview</h2>
+      <p>Click anywhere on the map to get real-time weather data.</p>
+      <div id="weatherData" class="loading"></div>
+    </section>
+
+    <section class="section transparent">
+      <h2>🚀 Platform Features</h2>
+      <ul>
+        <li>📍 Geolocation-based weather updates</li>
+        <li>🌐 Interactive map with weather overlays</li>
+        <li>📊 Detailed forecast reports and charts</li>
+        <li>🧭 Air Quality and Wind Speed monitoring</li>
+        <li>📝 User feedback and reporting system</li>
+      </ul>
+    </section>
+
+    <section class="section transparent">
+      <h2>📘 Navigation Guide</h2>
+      <p>Use the menu above to explore forecasts, feedback, and reports in-depth.</p>
+    </section>
+
+    <section class="section transparent">
+      <h2>👩‍💻 About Us</h2>
+      <p>We aggregate data from OpenWeatherMap, Windy, and AccuWeather to bring the most reliable weather insights to users worldwide.</p>
+    </section>
+
+    <section id="dataSources" class="section transparent">
+      <h2>📚 Data Sources</h2>
+      <div class="data-sources-container">
+        <div class="data-source">
+          <a href="https://openweathermap.org/" target="_blank" class="source-link">
+            <img src="https://play-lh.googleusercontent.com/-8wkZVkXugyyke6sDPUP5xHKQMzK7Ub3ms2EK9Jr00uhf1fiMhLbqX7K9SdoxbAuhQ" alt="OpenWeatherMap" class="data-source-icon"/>
+            <p>OpenWeatherMap</p>
+          </a>
+        </div>
+        <div class="data-source">
+          <a href="https://www.windy.com/" target="_blank" class="source-link">
+            <img src="https://play-lh.googleusercontent.com/qXBOdC6WVNPPZso8m5_Z_lCiNTG130ZwHAumXlLpF5r9yaPYICJw9tGGtPt5v9yh35E" alt="Windy" class="data-source-icon"/>
+            <p>Windy</p>
+          </a>
+        </div>
+        <div class="data-source">
+          <a href="https://www.accuweather.com/" target="_blank" class="source-link">
+            <img src="https://cdn.vectopus.com/kerismaker/icons/D93B17BBD6BA/C1EB389E455D/icons-sun-weather-forecast-climate-environment-temperaure-local-national-radar-256.png" alt="AccuWeather" class="data-source-icon"/>
+            <p>AccuWeather</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="section">
+    <h2>🌱 Heat Mitigation Solutions</h2>
+    <div class="solutions-grid">
+      <div class="solution-card">
+        <h3>Green Infrastructure</h3>
+        <ul>
+          <li>Urban forests and parks</li>
+          <li>Green roofs and walls</li>
+          <li>Street trees and shade corridors</li>
+        </ul>
+      </div>
+      <div class="solution-card">
+        <h3>Cool Surfaces</h3>
+        <ul>
+          <li>Reflective roofing materials</li>
+          <li>Light-colored pavements</li>
+          <li>Cool building materials</li>
+        </ul>
+      </div>
+      <div class="solution-card">
+        <h3>Water Solutions</h3>
+        <ul>
+          <li>Urban water bodies</li>
+          <li>Spray parks and fountains</li>
+          <li>Permeable pavements</li>
+        </ul>
+      </div>
+    </div>
+    <button onclick="calculateImpact()">Calculate Impact</button>
+    <div id="impact-result"></div>
+  </div>
+  <footer>
+    <p>&copy; Team Blasters</p>
+  </footer>
+</body>
+</html>

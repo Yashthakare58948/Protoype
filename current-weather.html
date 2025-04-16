@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Current Weather - Advanced Weather Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+  <script src="weather.js" defer></script> <!-- External script -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #ffcc80, #ffab91);
+      justify-content: center;
+      text-align: center;
+    }
+
+    header {
+      background-color: #ff8a65;
+      color: #fff;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav li {
+      margin: 0 12px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      
+      font-size: 2.5rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 30px 20px;
+    }
+
+    section {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      backdrop-filter: blur(4px);
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 230px;
+      font-size: 1rem;
+      margin-right: 10px;
+      border: 2px solid #ff8a65;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 1rem;
+      background-color: #ff7043;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e65100;
+      transform: scale(1.05);
+    }
+
+    .weather-card {
+      background-color: #fff3e0;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 6px solid #ff8a65;
+      margin-top: 20px;
+    }
+
+    .tips ul {
+      padding-left: 25px;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #ff8a65;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .popular-buttons button {
+      margin: 6px;
+      background-color: #fff;
+      color: #333;
+      border: 1px solid #999;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .popular-buttons button:hover {
+      background-color: #ffd180;
+      color: #000;
+    }
+
+    img {
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>☀ Current Weather Conditions</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="current-weather.html">Current Weather</a></li>
+        <li><a href="wind-air-quality.html">Wind & Air Quality</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="reward.html">Rewards</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>📍 Enter City to Get Weather</h2>
+      <input type="text" id="cityInput" placeholder="Enter city name" aria-label="City name input" />
+      <button id="fetchWeatherBtn" aria-label="Get weather for entered city">Get Weather</button>
+    </section>
+
+    <section id="loadingMessage" style="display: none;">Loading...</section>
+    <section id="cityWeather"></section>
+
+    <section>
+      <h2>🧠 <span style="text-transform: capitalize;">weather Tip</span></h2>
+      <div class="tips">
+        <p id="dynamicTip" style="margin-top: 12px; font-weight: bold; color: #e65100;"></p>
+      </div>
+    </section>
+    
+    
+
+    <section>
+      <h2>🌎 Popular Cities</h2>
+      <button onclick="autoCity('New York')" aria-label="Get weather for New York">New York</button>
+      <button onclick="autoCity('London')" aria-label="Get weather for London">London</button>
+      <button onclick="autoCity('Tokyo')" aria-label="Get weather for Tokyo">Tokyo</button>
+      <button onclick="autoCity('Delhi')" aria-label="Get weather for Delhi">Delhi</button>
+      <button onclick="autoCity('Paris')" aria-label="Get weather for Paris">Paris</button>
+    </section>
+
+    <section>
+      <h2>📡 Weather Icons</h2>
+      <p>OpenWeatherMap provides custom icons for visual context:</p>
+      <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="Rain Icon">
+      <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="Clear Sky Icon">
+      <img src="https://openweathermap.org/img/wn/13d@2x.png" alt="Snow Icon">
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Advanced Weather Platform | Powered by OpenWeatherMap</p>
+  </footer>
+</body>
+</html>

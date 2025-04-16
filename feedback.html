@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback - Advanced Weather Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .feedback-form {
+      background: linear-gradient(to right, #ffe9d6, #fff4dd);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      margin: auto;
+    }
+    .feedback-form h2 {
+      text-align: center;
+      color: #ff7043;
+    }
+    .feedback-block {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+    .feedback-block label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .feedback-block input, .feedback-block textarea, .feedback-block select {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .feedback-block textarea {
+      height: 100px;
+    }
+    .submit-btn {
+      background-color: #ff7043;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      width: 100%;
+    }
+    .submit-btn:hover {
+      background-color: #e85d34;
+    }
+    .multi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📝 Feedback Portal</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="current-weather.html">Current Weather</a></li>
+        <li><a href="wind-air-quality.html">Wind & Air Quality</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="reward.html">Rewards</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <form class="feedback-form" id="feedbackForm">
+      <h2>🌟 Share Your Feedback</h2>
+
+      <div class="feedback-block">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="feedback-block">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="multi-grid">
+        <div class="feedback-block">
+          <label for="rating">Rate Our Platform:</label>
+          <select id="rating" name="rating">
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="1">⭐</option>
+          </select>
+        </div>
+
+        <div class="feedback-block">
+          <label for="recommend">Would You Recommend Us?</label>
+          <select id="recommend" name="recommend">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="feedback-block">
+        <label for="usage">What do you use our platform for?</label>
+        <textarea id="usage" name="usage"></textarea>
+      </div>
+
+      <div class="feedback-block">
+        <label for="issues">Did you face any issues?</label>
+        <textarea id="issues" name="issues"></textarea>
+      </div>
+
+      <div class="feedback-block">
+        <label for="features">Suggest a New Feature:</label>
+        <textarea id="features" name="features"></textarea>
+      </div>
+
+      <div class="feedback-block">
+        <label for="design">Rate Design & UI:</label>
+        <select id="design" name="design">
+          <option value="excellent">Excellent</option>
+          <option value="good">Good</option>
+          <option value="average">Average</option>
+          <option value="poor">Poor</option>
+        </select>
+      </div>
+
+      <div class="feedback-block">
+        <label for="performance">Rate Performance:</label>
+        <select id="performance" name="performance">
+          <option value="excellent">Excellent</option>
+          <option value="good">Good</option>
+          <option value="average">Average</option>
+          <option value="poor">Poor</option>
+        </select>
+      </div>
+
+      <div class="feedback-block">
+        <label for="mobile">Is the mobile experience good?</label>
+        <select id="mobile" name="mobile">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <div class="feedback-block">
+        <label for="emailUpdates">Receive Email Updates?</label>
+        <select id="emailUpdates" name="emailUpdates">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <div class="feedback-block">
+        <label for="other">Other Comments:</label>
+        <textarea id="other" name="other"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Feedback</button>
+    </form>
+
+    <script>
+      document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        alert('✅ Thank you for your feedback! We value your input.');
+        this.reset();
+      });
+    </script>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Advanced Weather Platform | Your Opinions Matter</p>
+  </footer>
+</body>
+</html>

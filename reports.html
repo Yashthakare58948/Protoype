@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports - Advanced Weather Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f6;
+    }
+    header, footer {
+      background-color: #ffa07a;
+      text-align: center;
+      padding: 20px 0;
+      color: white;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .report-card {
+      border: 1px solid #ddd;
+      border-left: 5px solid #ff7043;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      background-color: #fffaf0;
+    }
+    .report-title {
+      font-weight: bold;
+      color: #ff7043;
+    }
+    .report-details {
+      font-size: 15px;
+      color: #444;
+    }
+    .section {
+      margin-top: 30px;
+    }
+    .section h2 {
+      border-bottom: 2px solid #ff7043;
+      padding-bottom: 5px;
+      color: #333;
+    }
+    .download-btn {
+      background-color: #ff7043;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .download-btn:hover {
+      background-color: #e85d34;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table th, table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    table th {
+      background-color: #fcb07e;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📄 Reports</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="current-weather.html">Current Weather</a></li>
+        <li><a href="wind-air-quality.html">Wind & Air Quality</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="reward.html">Rewards</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section">
+      <h2>📌 Latest Weather Reports</h2>
+      <div class="report-card">
+        <p class="report-title">🌀 Heatwave Warning - Nagpur</p>
+        <p class="report-details">Extreme temperatures reported in the Nagpur region. Citizens are advised to stay indoors during peak hours.</p>
+      </div>
+      <div class="report-card">
+        <p class="report-title">🌫️ AQI Report - Delhi</p>
+        <p class="report-details">Air Quality Index has reached 280 (Very Poor). Mask use and limited outdoor activity recommended.</p>
+      </div>
+      <div class="report-card">
+        <p class="report-title">🌧️ Monsoon Status - Kerala</p>
+        <p class="report-details">Monsoon has officially arrived in Kerala with expected rainfall for the next 5 days.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>📊 Monthly Summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Avg Temp (°C)</th>
+            <th>Avg AQI</th>
+            <th>Extreme Events</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>January</td>
+            <td>22.5</td>
+            <td>180</td>
+            <td>None</td>
+          </tr>
+          <tr>
+            <td>February</td>
+            <td>25.2</td>
+            <td>150</td>
+            <td>Dust Storm</td>
+          </tr>
+          <tr>
+            <td>March</td>
+            <td>30.8</td>
+            <td>200</td>
+            <td>Heat Wave</td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="download-btn" onclick="alert('📥 Report Downloaded (Simulated)')">Download Full Report</button>
+    </section>
+
+    <section class="section">
+      <h2>🛠️ Upcoming Features</h2>
+      <ul>
+        <li>Integration with real-time satellite data</li>
+        <li>Yearly trend graphs</li>
+        <li>User-submitted incident reports with media</li>
+        <li>Custom location-based weather analytics</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Advanced Weather Platform | Stay Updated. Stay Safe.</p>
+  </footer>
+</body>
+</html>

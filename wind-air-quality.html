@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wind & Air Quality - Advanced Weather Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>🌬️ Wind & Air Quality Dashboard</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="current-weather.html">Current Weather</a></li>
+        <li><a href="wind-air-quality.html">Wind & Air Quality</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="reports.html">Reports</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>🌍 Wind Patterns Map (Powered by Windy.com)</h2>
+      <iframe src="https://embed.windy.com/embed2.html?lat=20&lon=78&detailLat=20&detailLon=78&width=650&height=450&zoom=5&type=wind&menu=true&message=true&marker=true&calendar=now&pressure=true&location=coordinates&detail=true&metricWind=default&metricTemp=default&radarRange=-1" width="100%" height="450" frameborder="0"></iframe>
+    </section>
+
+    <section>
+      <h2>💨 Wind Speed Comparison (Cities)</h2>
+      <canvas id="windChart" width="400" height="200"></canvas>
+    </section>
+
+    <section>
+      <h2>🧪 Air Quality Index (AQI) - Sample Readings</h2>
+      <table border="1" style="width:100%; text-align:center;">
+        <thead>
+          <tr>
+            <th>City</th>
+            <th>PM2.5</th>
+            <th>PM10</th>
+            <th>AQI Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Delhi</td><td>120</td><td>210</td><td style="color:red;">Severe</td></tr>
+          <tr><td>Paris</td><td>35</td><td>50</td><td style="color:green;">Good</td></tr>
+          <tr><td>New York</td><td>60</td><td>80</td><td style="color:orange;">Moderate</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>🛡️ Health Recommendations</h2>
+      <ul>
+        <li>🚶 For AQI < 50: All good for outdoor activities</li>
+        <li>😷 AQI 100-200: Mask recommended, reduce outdoor exposure</li>
+        <li>⛔ AQI > 300: Avoid going outside, use air purifiers</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>🌪️ Extreme Wind Alerts</h2>
+      <p>If wind speed exceeds 50 km/h, stay indoors and avoid open areas.</p>
+    </section>
+
+    <script>
+      const ctx = document.getElementById('windChart').getContext('2d');
+      const windChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Delhi', 'Paris', 'New York', 'Tokyo', 'Mumbai'],
+          datasets: [{
+            label: 'Wind Speed (km/h)',
+            data: [35, 18, 25, 28, 30],
+            backgroundColor: '#36a2eb'
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Speed (km/h)'
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Advanced Weather Platform | Wind & AQI Monitoring</p>
+  </footer>
+</body>
+</html>
